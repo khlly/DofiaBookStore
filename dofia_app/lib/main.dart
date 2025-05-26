@@ -1,105 +1,64 @@
+import 'package:dofia_the_book/widgets/custom_app_bar.dart';
+import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
+import 'package:dofia_the_book/widgets/welcome_message.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const DofiaApp());
+  runApp(const DofiaTheBookApp());
 }
 
-class DofiaApp extends StatelessWidget {
-  const DofiaApp({super.key});
+class DofiaTheBookApp extends StatelessWidget {
+  const DofiaTheBookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'DofiaTheBook',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFE8F4F8),
+      ),
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FF), 
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFE0F7FF),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black),
-          onPressed: () {},
-        ),
-        centerTitle: true,
-        title: const Text(
-          'DofiaTheBook',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.black),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+      body: SafeArea(
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Text.rich(
-                TextSpan(
-                  text: 'Hello ',
-                  children: [
-                    TextSpan(
-                      text: 'User',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(text: ', Welcome back to Dofia!'),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(32),
-              ),
-              child: Row(
-                children: const [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search Here',
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.search),
-                ],
+            const CustomAppBar(),
+            const WelcomeMessage(),
+            const SearchBar(),
+            Expanded(
+              child: Container(
+                color: const Color(0xFFE8F4F8),
+                // Main content area
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: ''),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: ''),
-        ],
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
       ),
     );
   }
