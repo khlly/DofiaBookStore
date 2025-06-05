@@ -1,4 +1,4 @@
-import 'package:dofia_the_book/screens/HomeScreen.dart';
+import 'package:dofia_the_book/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

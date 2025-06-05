@@ -1,5 +1,5 @@
-import 'package:dofia_the_book/widgets/BottomNavigationBar.dart';
-import 'package:dofia_the_book/widgets/CustomHeader.dart';
+import 'package:dofia_the_book/widgets/bottom_navbar.dart';
+import 'package:dofia_the_book/widgets/header.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
