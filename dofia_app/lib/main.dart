@@ -1,3 +1,4 @@
+import 'package:dofia_the_book/screens/auth/signup_screen.dart';
 import 'package:dofia_the_book/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // Ajoute ici tes thèmes de couleurs et de texte comme discuté précédemment
       ),
-      home: const HomeScreen(), // C'est ici que tu utilises ton HomeScreen
+      home: const SignUpScreen(), // C'est ici que tu utilises ton HomeScreen
     );
   }
 }
