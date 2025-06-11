@@ -1,5 +1,6 @@
+import 'package:dofia_the_book/screens/auth/login_screen.dart';
 import 'package:dofia_the_book/screens/auth/signup_screen.dart';
-import 'package:dofia_the_book/screens/home_screen.dart';
+//import 'package:dofia_the_book/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // Ajoute ici tes thèmes de couleurs et de texte comme discuté précédemment
       ),
-      home: const SignUpScreen(), // C'est ici que tu utilises ton HomeScreen
+      home: const LoginScreen(), // C'est ici que tu utilises ton HomeScreen
     );
   }
 }
