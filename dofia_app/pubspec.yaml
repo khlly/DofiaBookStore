@@ -35,8 +35,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section below.
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/share/logoDofia.png
   #   - images/a_dot_ham.jpeg
 
   # To add custom fonts to your application, add a fonts section below.
