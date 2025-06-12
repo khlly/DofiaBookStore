@@ -14,13 +14,13 @@ class WelcomeMessage extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: RichText(
-            text: TextSpan(
-          style: const TextStyle(
+            text: const TextSpan(
+          style: TextStyle(
             fontSize: 14,
             color: Colors.black87,
             fontWeight: FontWeight.w500,
           ),
-          children: const [
+          children: [
             TextSpan(text: 'Hello '),
             TextSpan(
               text: 'NavinRem',
