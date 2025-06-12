@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class bottom_nav_bar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
@@ -28,6 +29,7 @@ class bottom_nav_bar extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 1.0,
               blurRadius: 5,

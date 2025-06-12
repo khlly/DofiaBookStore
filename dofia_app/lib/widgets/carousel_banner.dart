@@ -76,8 +76,8 @@ class _BookCarouselState extends State<BookCarousel> {
           child: GestureDetector(
             onTap: () => _goToPage(_currentPage + 1),
             child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFD1F2FF),
+              decoration: const BoxDecoration(
+                color: Color(0xFFD1F2FF),
                 shape: BoxShape.circle,
               ),
               padding: const EdgeInsets.all(8),

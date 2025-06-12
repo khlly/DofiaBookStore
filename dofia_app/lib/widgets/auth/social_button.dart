@@ -1,12 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 class SocialButtons extends StatelessWidget {
-  const SocialButtons();
-  
+  const SocialButtons({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
+  Widget build(BuildContext context) => throw UnimplementedError();
 }
