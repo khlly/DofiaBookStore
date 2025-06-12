@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dofia_the_book/widgets/auth/auth_form.dart';
 import 'package:dofia_the_book/widgets/auth/social_button.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
@@ -41,17 +41,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFE0F7FF),
+    return Scaffold(
+      backgroundColor: const Color(0xFFE0F7FF),
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 40),
-            Text("Welcome Back",
+            const SizedBox(height: 40),
+            const Text("Welcome Back",
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-            SizedBox(height: 20),
-            AuthForm(isLogin: true),
-            SocialButtons(),
+            const SizedBox(height: 20),
+            const AuthForm(isLogin: true),
+            SocialSignUpButton(
+              icon: Icons.login,
+              onPressed: () {},
+            ),
           ],
         ),
       ),
