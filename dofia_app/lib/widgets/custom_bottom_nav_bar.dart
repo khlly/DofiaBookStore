@@ -18,7 +18,7 @@ class CustomBottomNavBar extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withValues(),
-            spreadRadius: 1,
+            spreadRadius: 1.0,
             blurRadius: 5,
             offset: const Offset(0, -2),
           ),
@@ -32,8 +32,8 @@ class CustomBottomNavBar extends StatelessWidget {
             currentIndex: selectedIndex,
             onTap: onItemTapped,
             backgroundColor: Colors.white,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.grey[600],
+            // selectedItemColor: Colors.black,
+            // unselectedItemColor: Colors.grey[600],
             showSelectedLabels: false,
             showUnselectedLabels: false,
             elevation: 0,
@@ -43,7 +43,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border),
+                icon: Icon(Icons.favorite_sharp),
                 label: 'Favorites',
               ),
               BottomNavigationBarItem(
@@ -56,15 +56,16 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            height: 4,
-            width: 40,
-            margin: const EdgeInsets.only(bottom: 8),
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
+          // Container(
+          //   height: 10,
+          //   width: 40,
+          //   margin: const EdgeInsets.only(bottom: 20),
+          //   decoration: BoxDecoration(
+          //     color: Colors.black,
+          //     borderRadius: BorderRadius.circular(2),
+          //   ),
+          //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          // ),
         ],
       ),
     );

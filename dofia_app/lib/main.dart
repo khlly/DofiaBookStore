@@ -1,6 +1,9 @@
+import 'package:dofia_the_book/widgets/carousel_banner.dart';
 import 'package:dofia_the_book/widgets/custom_app_bar.dart';
-import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
+// import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
+import 'package:dofia_the_book/widgets/bottom_nav_bar.dart';
 import 'package:dofia_the_book/widgets/welcome_message.dart';
+import 'package:dofia_the_book/widgets/search_bar.dart' as custom;
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +19,7 @@ class DofiaTheBookApp extends StatelessWidget {
       title: 'DofiaTheBook',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color(0xFFE8F4F8),
+        scaffoldBackgroundColor: const Color(0xFFE0F7FF),
       ),
       home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
@@ -42,21 +45,29 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const CustomAppBar(),
             const WelcomeMessage(),
-            const SearchBar(),
+            const custom.SearchBar(),
+            const BookCarousel(
+              books: [
+                'assets/images/book1.jpg',
+                'assets/images/book2.jpg',
+                'assets/images/book3.jpg',
+              ],
+            ),
             Expanded(
               child: Container(
-                color: const Color(0xFFE8F4F8),
+                color: const Color(0xFFE0F7FF),
                 // Main content area
               ),
             ),
           ],
         ),
       ),
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: bottom_nav_bar(
         selectedIndex: _selectedIndex,
         onItemTapped: (index) {
+          // Handle item tap
           setState(() {
-            _selectedIndex = index;
+            _selectedIndex = index; // Update the selected index
           });
         },
       ),
