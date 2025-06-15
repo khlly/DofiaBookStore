@@ -21,15 +21,15 @@ class WelcomeMessage extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
           children: const [
-            TextSpan(text: 'Hello '),
+            TextSpan(text: 'Hello Guest, '),
             TextSpan(
-              text: 'NavinRem',
+              text: 'Log in',
               style: TextStyle(
                 color: Colors.blue, // Highlight color
                 fontWeight: FontWeight.bold,
               ),
             ),
-            TextSpan(text: ', Welcome back to Dofia!'),
+            TextSpan(text: ' first to make a purchase'),
           ],
         )),
         // child: const Text(
