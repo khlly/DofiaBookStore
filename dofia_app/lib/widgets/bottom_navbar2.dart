@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatelessWidget {
+class bottom_nav_bar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
 
@@ -11,7 +11,7 @@ class BottomNavBar extends StatelessWidget {
     Icons.person,
   ];
 
-  const BottomNavBar({
+  const bottom_nav_bar({
     super.key,
     required this.selectedIndex,
     required this.onItemTapped,
@@ -28,7 +28,6 @@ class BottomNavBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           boxShadow: [
             BoxShadow(
-              // ignore: deprecated_member_use
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 1.0,
               blurRadius: 5,

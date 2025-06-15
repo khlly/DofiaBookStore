@@ -1,8 +1,3 @@
-import 'package:dofia_the_book/widgets/carousel_banner.dart';
-import 'package:dofia_the_book/widgets/custom_app_bar.dart';
-import 'package:dofia_the_book/widgets/bottom_nav_bar.dart';
-import 'package:dofia_the_book/widgets/welcome_message.dart';
-import 'package:dofia_the_book/widgets/search_bar.dart' as custom;
 import 'package:dofia_the_book/screens/home_screen_guest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +7,7 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {
-    runApp(const DofiaTheBookApp());
+    runApp(DofiaTheBookApp());
   });
 }
 
@@ -22,7 +17,7 @@ class DofiaTheBookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DofiaTheBook',
+      title: 'Dofia BookStore',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFE0F7FF),
@@ -32,60 +27,3 @@ class DofiaTheBookApp extends StatelessWidget {
     );
   }
 }
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({super.key});
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   int _selectedIndex = 0;
-  
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(Ho)
-//   }
-  
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   int _selectedIndex = 0;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Column(
-//           children: [
-//             const WelcomeMessage(),
-//             const custom.SearchBar(),
-//             const BookCarousel(
-//               books: [
-//                 'assets/images/book1.jpg',
-//                 'assets/images/book2.jpg',
-//                 'assets/images/book3.jpg',
-//               ],
-//             ),
-//             Expanded(
-//               child: Container(
-//                 color: const Color(0xFFE0F7FF),
-//                 // Main content area
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       bottomNavigationBar: bottom_nav_bar(
-//         selectedIndex: _selectedIndex,
-//         onItemTapped: (index) {
-//           // Handle item tap
-//           setState(() {
-//             _selectedIndex = index; // Update the selected index
-//           });
-//         },
-//       ),
-//     );
-//   }
-// }
