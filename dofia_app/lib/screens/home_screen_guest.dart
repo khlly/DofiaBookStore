@@ -1,6 +1,6 @@
+import 'package:dofia_the_book/widgets/book_carousel.dart';
 import 'package:dofia_the_book/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-// import 'package:dofia_the_book/widgets/book_carousel.dart';
 import 'package:dofia_the_book/widgets/welcome_message.dart';
 import 'package:dofia_the_book/widgets/search_bar.dart' as custom;
 import 'package:dofia_the_book/widgets/bottom_nav_bar.dart';
@@ -34,6 +34,7 @@ class _HomeScreenGuestState extends State<HomeScreenGuest> {
               child: Container(
                 color: const Color(0xFFE0F7FF),
                 // Main content area
+                child: const BookCarousel(),
               ),
             ),
           ],

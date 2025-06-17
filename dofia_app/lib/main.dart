@@ -7,7 +7,7 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {
-    runApp(DofiaTheBookApp());
+    runApp(const DofiaTheBookApp());
   });
 }
 
