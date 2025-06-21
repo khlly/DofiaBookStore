@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 
 class BookCarousel extends StatefulWidget {
   const BookCarousel({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _BookCarouselState extends State<BookCarousel> {
                   ),
                 );
               }).toList(),
-              carouselController: _carouselController,
+              carouselController: null,
               options: CarouselOptions(
                 height: 220,
                 viewportFraction: 1.0,
@@ -55,23 +54,23 @@ class _BookCarouselState extends State<BookCarousel> {
               left: 8,
               top: 0,
               bottom: 0,
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {
-                    _carouselController.previousPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFD1F2FF),
-                    ),
-                    child: const Icon(Icons.arrow_back_ios_new, size: 16),
-                  ),
-                ),
+              // child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  _carouselController.previousPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                // child: Container(
+                //   padding: const EdgeInsets.all(8),
+                //   decoration: const BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Color(0xFFD1F2FF),
+                //   ),
+                //   child: const Icon(Icons.arrow_back_ios_new, size: 16),
+                // ),
+                // ),
               ),
             ),
             // Right arrow
@@ -79,23 +78,23 @@ class _BookCarouselState extends State<BookCarousel> {
               right: 8,
               top: 0,
               bottom: 0,
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {
-                    _carouselController.nextPage(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFD1F2FF),
-                    ),
-                    child: const Icon(Icons.arrow_forward_ios, size: 16),
-                  ),
-                ),
+              // child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  _carouselController.nextPage(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                // child: Container(
+                //   padding: const EdgeInsets.all(8),
+                //   decoration: const BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: Color(0xFFD1F2FF),
+                //   ),
+                //   child: const Icon(Icons.arrow_forward_ios, size: 16),
+                // ),
+                // ),
               ),
             ),
           ],
@@ -131,11 +130,11 @@ class _BookCarouselState extends State<BookCarousel> {
   }
 }
 
-// extension on CarouselController {
-//   void previousPage({required Duration duration, required Cubic curve}) {}
+extension on CarouselController {
+  void previousPage({required Duration duration, required Cubic curve}) {}
 
-//   void nextPage({required Duration duration, required Cubic curve}) {}
+  void nextPage({required Duration duration, required Cubic curve}) {}
 
-//   void animateToPage(int key,
-//       {required Duration duration, required Cubic curve}) {}
-// }
+  void animateToPage(int key,
+      {required Duration duration, required Cubic curve}) {}
+}

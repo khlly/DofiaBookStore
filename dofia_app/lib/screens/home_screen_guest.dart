@@ -1,9 +1,7 @@
 import 'package:dofia_the_book/widgets/book_carousel.dart';
-import 'package:dofia_the_book/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:dofia_the_book/widgets/welcome_message.dart';
-import 'package:dofia_the_book/widgets/search_bar.dart' as custom;
-import 'package:dofia_the_book/widgets/bottom_nav_bar.dart';
+import 'package:dofia_the_book/widgets/Product_Carousel.dart';
+import '../data/Allproduct_data.dart';
 
 class HomeScreenGuest extends StatefulWidget {
   const HomeScreenGuest({super.key});
@@ -13,36 +11,26 @@ class HomeScreenGuest extends StatefulWidget {
 }
 
 class _HomeScreenGuestState extends State<HomeScreenGuest> {
-  int _selectedIndex = 0; // Default selected index
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index; // Update the selected index
-    });
-  }
+// Default selected index
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(title: 'DofiaTheBook'),
-      body: SafeArea(
+    return SingleChildScrollView(
+      child: Container(
+        color: const Color(0xFFE0F7FF),
         child: Column(
           children: [
-            const WelcomeMessage(),
-            const custom.SearchBar(),
-            Expanded(
-              child: Container(
-                color: const Color(0xFFE0F7FF),
-                // Main content area
-                child: const BookCarousel(),
-              ),
-            ),
+            // const WelcomeMessage(),
+            // const custom.SearchBar(),
+            // const BookCarousel(),
+            ProductCarousel(title: 'All Products', books: books),
+            ProductCarousel(title: 'Popular Books', books: popularBooks),
+            ProductCarousel(title: 'Discounted Deals', books: discountedBooks),
+            ProductCarousel(title: 'Hot Genre: Fantasy', books: hotGenreBooks),
+            ProductCarousel(title: 'New Arrivals', books: latestBooks),
+            const BookCarousel(),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
       ),
     );
   }

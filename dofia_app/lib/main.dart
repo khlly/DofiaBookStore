@@ -1,4 +1,4 @@
-import 'package:dofia_the_book/screens/home_screen_guest.dart';
+import 'package:dofia_the_book/main_screen_guest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +22,7 @@ class DofiaTheBookApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFE0F7FF),
       ),
-      home: const HomeScreenGuest(),
+      home: const MainScreenGuest(),
       debugShowCheckedModeBanner: false,
     );
   }
