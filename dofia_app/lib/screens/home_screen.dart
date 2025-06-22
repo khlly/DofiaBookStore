@@ -1,7 +1,7 @@
-// import 'package:dofia_the_book/widgets/bottom_navbar.dart';
-import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
-import 'package:dofia_the_book/widgets/header.dart';
+import 'package:dofia_the_book/widgets/book_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:dofia_the_book/widgets/Product_Carousel.dart';
+import '../data/Allproduct_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,31 +11,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
+// Default selected index
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FF),
-      body: const Column(
-        children: [
-          SizedBox(height: 40), // Simule la status bar
-          CustomHeader(),
-          Expanded(
-            child: Center(
-              child: Text(
-                'Page 1',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        onItemTapped: (index) {
-          setState(() => currentIndex = index);
-        },
-        selectedIndex: 1,
+    return SingleChildScrollView(
+      child: Container(
+        color: const Color(0xFFE0F7FF),
+        child: Column(
+          children: [
+            ProductCarousel(title: 'All Products', books: books),
+            ProductCarousel(title: 'Popular Books', books: popularBooks),
+            ProductCarousel(title: 'Discounted Deals', books: discountedBooks),
+            ProductCarousel(title: 'Hot Genre: Fantasy', books: hotGenreBooks),
+            ProductCarousel(title: 'New Arrivals', books: latestBooks),
+            const BookCarousel(),
+          ],
+        ),
       ),
     );
   }
