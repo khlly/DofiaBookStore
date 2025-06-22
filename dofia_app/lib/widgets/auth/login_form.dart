@@ -1,6 +1,9 @@
+import 'package:dofia_the_book/data/user_storage.dart';
+import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
-import '../../../screens/home_screen.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:dofia_the_book/data/user_provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -15,13 +18,13 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool isValidEmail(String email) {
-    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}\$').hasMatch(email);
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 
   bool isValidPhoneNumber(String phoneNumber) {
     String cleaned = phoneNumber.replaceAll(RegExp(r'\s'), '');
     if (cleaned.startsWith('+')) cleaned = cleaned.substring(1);
-    return RegExp(r'^\d{7,15}\$').hasMatch(cleaned);
+    return RegExp(r'^\d{7,15}$').hasMatch(cleaned);
   }
 
   @override
@@ -85,15 +88,29 @@ class _LoginFormState extends State<LoginForm> {
               ),
               minimumSize: const Size.fromHeight(50),
             ),
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Successful connection! Redirection...')),
-                );
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
-                );
+                final contact = _phoneOrEmailController.text.trim();
+
+                final username =
+                    await UserStorage.getUsernameFromContact(contact);
+
+                if (username != null) {
+                  final userProvider =
+                      Provider.of<UserProvider>(context, listen: false);
+                  userProvider.login(username);
+                  await UserStorage.saveCurrentUsername(username);
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const MainScreen()),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                        content: Text('User not found. Try signing up.')),
+                  );
+                }
               }
             },
             child: const Text(

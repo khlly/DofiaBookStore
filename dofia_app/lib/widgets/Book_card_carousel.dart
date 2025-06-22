@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../data/user_provider.dart';
+import '../screens/auth/login_screen.dart';
 
 class BookCardCarousel extends StatefulWidget {
   final String imagePath;
@@ -38,9 +41,23 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
   }
 
   void _toggleFavorite() {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    if (!userProvider.isLoggedIn) {
+      // Si non connecté, redirection vers login
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+      return;
+    }
+
+    // Sinon, toggle normalement
     setState(() {
-      _isFavorite = !_isFavorite; // Toggle on tap
+      _isFavorite = !_isFavorite;
     });
+
+    // 🔁 Tu peux ici aussi ajouter la logique pour sauvegarder les favoris localement
   }
 
   @override
