@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '../screens/auth/login_screen.dart';
 
 class WelcomeMessage extends StatelessWidget {
   const WelcomeMessage({super.key});
@@ -14,32 +16,32 @@ class WelcomeMessage extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: RichText(
-            text: const TextSpan(
-          style: TextStyle(
+            text: TextSpan(
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.black87,
             fontWeight: FontWeight.w500,
           ),
           children: [
-            TextSpan(text: 'Hello '),
+            const TextSpan(text: 'Hello Guest, '),
             TextSpan(
-              text: 'NavinRem',
-              style: TextStyle(
+              text: 'Log in',
+              style: const TextStyle(
                 color: Colors.blue, // Highlight color
                 fontWeight: FontWeight.bold,
               ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()),
+                  );
+                },
             ),
-            TextSpan(text: ', Welcome back to Dofia!'),
+            const TextSpan(text: ' first to make a purchase'),
           ],
         )),
-        // child: const Text(
-        //   'Hello Guest, Log in first to make a purchase',
-        //   style: TextStyle(
-        //     fontSize: 14,
-        //     color: Colors.black87,
-        //     fontWeight: FontWeight.w500,
-        //   ),
-        // ),
       ),
     );
   }
