@@ -31,13 +31,22 @@ class _SignUpFormState extends State<SignUpForm> {
 
   // check phone format
   // basic regex
-  bool isValidPhoneNumber(String phoneNumber) {
-    // delete non numerical characters
-    String cleanedNumber = phoneNumber.replaceAll(RegExp(r'\S'), '');
-    // phone between 7 and 15 number
-    return cleanedNumber.length >= 7 && cleanedNumber.length <= 15;
-    // can use package like 'phone_form_field' for more robustess
+bool isValidPhoneNumber(String phoneNumber) {
+  // Delete spaces
+  String cleanedNumber = phoneNumber.replaceAll(RegExp(r'\s'), '');
+
+  // If begin with +, delete it but valid
+  if (cleanedNumber.startsWith('+')) {
+    cleanedNumber = cleanedNumber.substring(1);
   }
+
+  // If only numbers 
+  if (!RegExp(r'^\d*$').hasMatch(cleanedNumber)) {
+    return false; // Not only numbers 
+  }
+
+  return cleanedNumber.length >= 7 && cleanedNumber.length <= 15;
+}
 
   @override
   Widget build(BuildContext context) {
