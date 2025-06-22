@@ -1,4 +1,5 @@
-import 'package:dofia_the_book/widgets/bottom_navbar.dart';
+// import 'package:dofia_the_book/widgets/bottom_navbar.dart';
+import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
 import 'package:dofia_the_book/widgets/header.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(
-        onItemSelected: (index) {
+        onItemTapped: (index) {
           setState(() => currentIndex = index);
         },
+        selectedIndex: 1,
       ),
     );
   }

@@ -20,9 +20,6 @@ class _HomeScreenGuestState extends State<HomeScreenGuest> {
         color: const Color(0xFFE0F7FF),
         child: Column(
           children: [
-            // const WelcomeMessage(),
-            // const custom.SearchBar(),
-            // const BookCarousel(),
             ProductCarousel(title: 'All Products', books: books),
             ProductCarousel(title: 'Popular Books', books: popularBooks),
             ProductCarousel(title: 'Discounted Deals', books: discountedBooks),
