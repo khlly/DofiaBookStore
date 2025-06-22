@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class BookCarousel extends StatefulWidget {
-  const BookCarousel({Key? key}) : super(key: key);
+  const BookCarousel({super.key});
 
   @override
   State<BookCarousel> createState() => _BookCarouselState();
 }
 
 class _BookCarouselState extends State<BookCarousel> {
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController =
+      CarouselSliderController();
   int _currentPage = 0;
 
   final List<String> _imgList = [
@@ -37,7 +38,7 @@ class _BookCarouselState extends State<BookCarousel> {
                   ),
                 );
               }).toList(),
-              carouselController: null,
+              carouselController: _carouselController,
               options: CarouselOptions(
                 height: 220,
                 viewportFraction: 1.0,
@@ -50,53 +51,35 @@ class _BookCarouselState extends State<BookCarousel> {
               ),
             ),
             // Left arrow
-            Positioned(
-              left: 8,
-              top: 0,
-              bottom: 0,
-              // child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  _carouselController.previousPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                // child: Container(
-                //   padding: const EdgeInsets.all(8),
-                //   decoration: const BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Color(0xFFD1F2FF),
-                //   ),
-                //   child: const Icon(Icons.arrow_back_ios_new, size: 16),
-                // ),
-                // ),
-              ),
-            ),
-            // Right arrow
-            Positioned(
-              right: 8,
-              top: 0,
-              bottom: 0,
-              // child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  _carouselController.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                // child: Container(
-                //   padding: const EdgeInsets.all(8),
-                //   decoration: const BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Color(0xFFD1F2FF),
-                //   ),
-                //   child: const Icon(Icons.arrow_forward_ios, size: 16),
-                // ),
-                // ),
-              ),
-            ),
+            // Positioned(
+            //   left: 8,
+            //   top: 0,
+            //   bottom: 0,
+            //   // child: Center(
+            //   child: GestureDetector(
+            //     onTap: () {
+            //         _carouselController.previousPage(
+            //           duration: const Duration(milliseconds: 500),
+            //           curve: Curves.easeInOut,
+            //         );
+            //     },
+            //   ),
+            // ),
+            // // Right arrow
+            // Positioned(
+            //   right: 8,
+            //   top: 0,
+            //   bottom: 0,
+            //   // child: Center(
+            //   child: GestureDetector(
+            //     onTap: () {
+            //       _carouselController.nextPage(
+            //         duration: const Duration(milliseconds: 500),
+            //         curve: Curves.easeInOut,
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
         const SizedBox(height: 8),
@@ -105,8 +88,8 @@ class _BookCarouselState extends State<BookCarousel> {
           children: _imgList.asMap().entries.map((entry) {
             return GestureDetector(
               onTap: () {
-                _carouselController.animateToPage(
-                  entry.key,
+                _carouselController.animateTo(
+                  entry.key.toDouble(),
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOut,
                 );
@@ -130,11 +113,7 @@ class _BookCarouselState extends State<BookCarousel> {
   }
 }
 
-extension on CarouselController {
-  void previousPage({required Duration duration, required Cubic curve}) {}
-
-  void nextPage({required Duration duration, required Cubic curve}) {}
-
-  void animateToPage(int key,
+extension on CarouselSliderController {
+  void animateTo(double double,
       {required Duration duration, required Cubic curve}) {}
 }

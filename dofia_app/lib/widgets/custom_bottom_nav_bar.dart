@@ -27,7 +27,7 @@ class CustomBottomNavBar extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _navIcon(Icons.home, 0),
           _navIcon(Icons.favorite, 1),

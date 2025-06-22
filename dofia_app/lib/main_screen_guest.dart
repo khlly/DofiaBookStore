@@ -23,14 +23,30 @@ class _MainScreenGuestState extends State<MainScreenGuest>
   late AnimationController _controller;
   late Animation<Offset> _drawerOffset;
 
-  final List<Widget> _pages = [
-    const HomeScreenGuest(),
-    const GuestPagesFavCart(
-      guest_title_page: 'My Favorite',
-      key_word_page: 'Favorite',
-    ),
-    const GuestPagesFavCart(guest_title_page: 'My Cart', key_word_page: 'Cart')
-  ];
+  List<Widget> get _pages => [
+        HomeScreenGuest(
+          onGoToCart: _onGotoCart,
+          onGoToFavorite: _onGotoFavorite,
+        ),
+        const GuestPagesFavCart(
+          guest_title_page: 'My Favorite',
+          key_word_page: 'Favorite',
+        ),
+        const GuestPagesFavCart(
+            guest_title_page: 'My Cart', key_word_page: 'Cart'),
+      ];
+
+  void _onGotoCart() {
+    setState(() {
+      _selectedIndex = 2;
+    });
+  }
+
+  void _onGotoFavorite() {
+    setState(() {
+      _selectedIndex = 1;
+    });
+  }
 
   Widget _drawerTile({required IconData icon, required String title}) {
     return ListTile(
@@ -43,11 +59,9 @@ class _MainScreenGuestState extends State<MainScreenGuest>
   }
 
   void _onItemTapped(int index) {
-    Navigator.pop(context);
-    Future.delayed(const Duration(milliseconds: 200), () {
-      setState(() {
-        _selectedIndex = index;
-      });
+    // Navigator.pop(context);
+    setState(() {
+      _selectedIndex = index;
     });
   }
 
@@ -73,33 +87,33 @@ class _MainScreenGuestState extends State<MainScreenGuest>
     });
   }
 
+  Future<bool> _handleWillPop() async {
+    if (_selectedIndex != 0) {
+      setState(() {
+        _selectedIndex = 0;
+      });
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget bodyContent;
-    Widget menuDrawer;
+    Widget bodyContent = _selectedIndex == 0
+        ? SingleChildScrollView(
+            child: Column(
+              children: [
+                const WelcomeMessage(),
+                const SearchBar(),
+                const BookCarousel(),
+                _pages[0], // HomeScreenGuest with callbacks
+                const SizedBox(height: 115),
+              ],
+            ),
+          )
+        : _pages[_selectedIndex]; // Directly render selected page
 
-    if (_selectedIndex == 0) {
-      bodyContent = SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const WelcomeMessage(),
-              const SearchBar(),
-              const BookCarousel(),
-              _pages[0],
-              Container(
-                height: 115,
-                color: const Color(0xFFE0F7FF),
-              )
-            ],
-          ),
-        ),
-      );
-    } else {
-      bodyContent = _pages[_selectedIndex];
-    }
-
-    menuDrawer = SizedBox(
+    Widget menuDrawer = SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Drawer(
         elevation: 16,
@@ -186,35 +200,41 @@ class _MainScreenGuestState extends State<MainScreenGuest>
       ),
     );
 
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: CustomAppBar(
-        title: 'DofiaTheBook',
-        onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
-      ),
-      drawer: menuDrawer,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              color: const Color(0xFFE0F7FF),
-              child: bodyContent,
-            ),
+    return WillPopScope(
+        onWillPop: _handleWillPop,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: CustomAppBar(
+            title: 'DofiaTheBook',
+            onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
           ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: CustomBottomNavBar(
-                selectedIndex: _selectedIndex,
-                onItemTapped: _onItemTapped,
+          drawer: menuDrawer,
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: Container(
+                  color: const Color(0xFFE0F7FF),
+                  child: bodyContent,
+                ),
               ),
-            ),
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomBottomNavBar(
+                    selectedIndex: _selectedIndex,
+                    onItemTapped: _onItemTapped,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
+  }
+
+  void onGoToCart() {
+    setState(() => _selectedIndex = 2);
   }
 }

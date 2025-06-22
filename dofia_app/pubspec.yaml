@@ -29,7 +29,7 @@ dev_dependencies:
 
   # Recommended set of linting rules for Flutter projects.
   # Updated to the latest recommended version for Flutter 3 / Dart 3.
-  flutter_lints: ^3.0.0 # Updated from ^6.0.0 - this is a critical update for modern Flutter
+  flutter_lints: ^6.0.0 # Updated from ^6.0.0 - this is a critical update for modern Flutter
 
 flutter:
   # Enables Material Design styling for your app.
