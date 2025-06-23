@@ -51,7 +51,8 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFormField(
             controller: _phoneOrEmailController,
-            decoration: inputDecoration.copyWith(hintText: 'Phone Number or Email'),
+            decoration:
+                inputDecoration.copyWith(hintText: 'Phone Number or Email'),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {

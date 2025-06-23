@@ -40,7 +40,6 @@ class _MainScreenState extends State<MainScreen>
         const GuestPagesFavCart(
             guest_title_page: 'My Cart', key_word_page: 'Cart'),
         const ProfileScreen(),
-
       ];
 
   void _onGotoCart() {
