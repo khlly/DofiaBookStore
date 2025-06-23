@@ -1,8 +1,6 @@
 import 'package:dofia_the_book/data/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:dofia_the_book/widgets/custom_app_bar.dart';
-import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
