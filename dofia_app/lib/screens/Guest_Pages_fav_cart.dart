@@ -17,12 +17,11 @@ class _GuestPagesFavCartState extends State<GuestPagesFavCart> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Center(
-            child: const WelcomeMessage(),
-          ),
+          const WelcomeMessage(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
