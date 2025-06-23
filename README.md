@@ -52,12 +52,12 @@ lib/
 ├── widgets/ # Reusable components (BookCard, CartItem, etc.)
 └── main.dart # Main application entry
 ```
-##🧪 Please note (demo mode)
+## 🧪 Please note (demo mode)
 - No real database: favorites and shopping cart are stored only in memory
 - Simulates a purchase process without a payment gateway
 - The login status is simplified
 
-##✨ Possible improvements
+## ✨ Possible improvements
 - Firebase/Supabase backend integration
 - True authentication
 - Keyword search
