@@ -21,6 +21,8 @@ dependencies:
 
   # For iOS-style icons. Updated to the latest stable version.
   cupertino_icons: ^1.0.8 # Updated from 1.0.2
+  provider: ^6.1.5
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   # For writing Flutter unit and widget tests.

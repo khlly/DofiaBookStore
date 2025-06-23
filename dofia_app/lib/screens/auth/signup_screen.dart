@@ -1,9 +1,9 @@
 // lib/screens/auth/signup_screen.dart
+import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/auth/auth_header.dart';
 import '../../widgets/auth/signup_form.dart';
 import '../../widgets/auth/social_button.dart';
-import '../home_screen.dart'; // Make sure to import your HomePage
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -11,7 +11,7 @@ class SignUpScreen extends StatelessWidget {
   void _navigateToHomePage(BuildContext context) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const MainScreen()),
     );
   }
 

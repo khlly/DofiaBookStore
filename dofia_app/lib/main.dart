@@ -1,13 +1,18 @@
-import 'package:dofia_the_book/main_screen_guest.dart';
+import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:dofia_the_book/data/user_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {
-    runApp(const DofiaTheBookApp());
+    runApp(
+      ChangeNotifierProvider(
+          create: (_) => UserProvider(), child: const DofiaTheBookApp()),
+    );
   });
 }
 
@@ -22,7 +27,7 @@ class DofiaTheBookApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFE0F7FF),
       ),
-      home: const MainScreenGuest(),
+      home: const MainScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

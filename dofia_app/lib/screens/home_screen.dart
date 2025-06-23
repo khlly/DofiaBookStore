@@ -1,41 +1,60 @@
-// import 'package:dofia_the_book/widgets/bottom_navbar.dart';
-import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
-import 'package:dofia_the_book/widgets/header.dart';
+import 'package:dofia_the_book/widgets/book_carousel.dart';
 import 'package:flutter/material.dart';
+import 'package:dofia_the_book/widgets/Product_Carousel.dart';
+import '../data/Allproduct_data.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreenGuest extends StatefulWidget {
+  final VoidCallback onGoToCart;
+  final VoidCallback onGoToFavorite;
+
+  const HomeScreenGuest(
+      {super.key, required this.onGoToCart, required this.onGoToFavorite});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenGuest> createState() => _HomeScreenGuestState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
+class _HomeScreenGuestState extends State<HomeScreenGuest> {
+// Default selected index
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFE0F7FF),
-      body: const Column(
-        children: [
-          SizedBox(height: 40), // Simule la status bar
-          CustomHeader(),
-          Expanded(
-            child: Center(
-              child: Text(
-                'Page 1',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
+    return SingleChildScrollView(
+      child: Container(
+        color: const Color(0xFFE0F7FF),
+        child: Column(
+          children: [
+            ProductCarousel(
+              title: 'All Products',
+              books: books,
+              onGoToCart: widget.onGoToCart,
+              onGoToFavorite: widget.onGoToFavorite,
             ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        onItemTapped: (index) {
-          setState(() => currentIndex = index);
-        },
-        selectedIndex: 1,
+            ProductCarousel(
+                title: 'Popular Books',
+                books: popularBooks,
+                onGoToCart: widget.onGoToCart,
+                onGoToFavorite: widget.onGoToFavorite),
+            ProductCarousel(
+                title: 'Discounted Deals',
+                books: discountedBooks,
+                onGoToCart: widget.onGoToCart,
+                onGoToFavorite: widget.onGoToFavorite),
+            ProductCarousel(
+              title: 'Hot Genre: Fantasy',
+              books: hotGenreBooks,
+              onGoToCart: widget.onGoToCart,
+              onGoToFavorite: widget.onGoToFavorite,
+            ),
+            ProductCarousel(
+              title: 'New Arrivals',
+              books: latestBooks,
+              onGoToCart: widget.onGoToCart,
+              onGoToFavorite: widget.onGoToFavorite,
+            ),
+            const BookCarousel(),
+          ],
+        ),
       ),
     );
   }

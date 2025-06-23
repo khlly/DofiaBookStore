@@ -1,21 +1,23 @@
-import 'package:dofia_the_book/screens/home_screen_guest.dart';
+import 'package:dofia_the_book/data/user_provider.dart';
+import 'package:dofia_the_book/screens/home_screen.dart';
 import 'package:dofia_the_book/widgets/custom_app_bar.dart';
 import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart' hide SearchBar;
+import 'package:provider/provider.dart';
 import 'screens/Guest_Pages_fav_cart.dart';
 import 'widgets/welcome_message.dart';
 import 'widgets/book_carousel.dart';
 import 'widgets/search_bar.dart';
 import 'screens/auth/login_screen.dart';
 
-class MainScreenGuest extends StatefulWidget {
-  const MainScreenGuest({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<MainScreenGuest> createState() => _MainScreenGuestState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenGuestState extends State<MainScreenGuest>
+class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
   int _selectedIndex = 0; // Default selected index
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -113,6 +115,10 @@ class _MainScreenGuestState extends State<MainScreenGuest>
           )
         : _pages[_selectedIndex]; // Directly render selected page
 
+    final userProvider = Provider.of<UserProvider>(context);
+    final isLoggedIn = userProvider.isLoggedIn;
+    final username = userProvider.username ?? 'Guest User';
+
     Widget menuDrawer = SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Drawer(
@@ -125,7 +131,7 @@ class _MainScreenGuestState extends State<MainScreenGuest>
               const SizedBox(height: 50),
 
               // Profile Section
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
@@ -135,12 +141,14 @@ class _MainScreenGuestState extends State<MainScreenGuest>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Guest User',
+                          username,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        Text('Not available',
-                            style: TextStyle(fontSize: 12, color: Colors.grey)),
+                        Text(
+                          isLoggedIn ? 'Logged in' : 'Not available',
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        ),
                       ],
                     ),
                     Spacer(),
@@ -179,19 +187,23 @@ class _MainScreenGuestState extends State<MainScreenGuest>
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6)),
                       ),
-                      onPressed: () {
-                        // Close the drawer first
+                      onPressed: () async {
                         Navigator.pop(context);
-
-                        // Then navigate to the login screen
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        );
+                        if (isLoggedIn) {
+                          await userProvider
+                              .logoutAndClearPrefs(); // à créer dans UserProvider si pas encore
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                          );
+                        }
                       },
-                      child: const Text("Log in",
-                          style: TextStyle(color: Colors.white)),
+                      child: Text(
+                        isLoggedIn ? "Log out" : "Log in",
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   )),
             ],
