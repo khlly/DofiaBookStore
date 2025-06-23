@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class BookCarousel extends StatefulWidget {
-  const BookCarousel({Key? key}) : super(key: key);
+  const BookCarousel({super.key});
 
   @override
   State<BookCarousel> createState() => _BookCarouselState();
@@ -92,8 +92,8 @@ class _BookCarouselState extends State<BookCarousel> {
           children: _imgList.asMap().entries.map((entry) {
             return GestureDetector(
               onTap: () {
-                _carouselController.animateToPage(
-                  entry.key,
+                _carouselController.animateTo(
+                  entry.key.toDouble(),
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOut,
                 );
@@ -115,4 +115,9 @@ class _BookCarouselState extends State<BookCarousel> {
       ],
     );
   }
+}
+
+extension on CarouselSliderController {
+  void animateTo(double double,
+      {required Duration duration, required Cubic curve}) {}
 }
