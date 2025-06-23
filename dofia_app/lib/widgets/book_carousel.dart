@@ -9,7 +9,8 @@ class BookCarousel extends StatefulWidget {
 }
 
 class _BookCarouselState extends State<BookCarousel> {
-  final CarouselController _carouselController = CarouselController();
+  final CarouselSliderController _carouselController =
+      CarouselSliderController();
   int _currentPage = 0;
 
   final List<String> _imgList = [
@@ -24,80 +25,66 @@ class _BookCarouselState extends State<BookCarousel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            CarouselSlider(
-              items: _imgList.map((url) {
-                return ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    url,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                );
-              }).toList(),
-              carouselController: null,
-              options: CarouselOptions(
-                height: 220,
-                viewportFraction: 1.0,
-                autoPlay: true,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-              ),
-            ),
-            // Left arrow
-            Positioned(
-              left: 8,
-              top: 0,
-              bottom: 0,
-              // child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  _carouselController.previousPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
+        SizedBox(
+          height: 220,
+          child: Stack(
+            children: [
+              CarouselSlider(
+                items: _imgList.map((url) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      url,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   );
-                },
-                // child: Container(
-                //   padding: const EdgeInsets.all(8),
-                //   decoration: const BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Color(0xFFD1F2FF),
-                //   ),
-                //   child: const Icon(Icons.arrow_back_ios_new, size: 16),
-                // ),
-                // ),
+                }).toList(),
+                carouselController: _carouselController,
+                options: CarouselOptions(
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentPage = index;
+                    });
+                  },
+                ),
               ),
-            ),
-            // Right arrow
-            Positioned(
-              right: 8,
-              top: 0,
-              bottom: 0,
-              // child: Center(
-              child: GestureDetector(
-                onTap: () {
-                  _carouselController.nextPage(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                // child: Container(
-                //   padding: const EdgeInsets.all(8),
-                //   decoration: const BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     color: Color(0xFFD1F2FF),
-                //   ),
-                //   child: const Icon(Icons.arrow_forward_ios, size: 16),
-                // ),
-                // ),
+
+              // Arrow gauche
+              Positioned(
+                left: 8,
+                top: 0,
+                bottom: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    _carouselController.previousPage(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: const Icon(Icons.arrow_back_ios_new, size: 16),
+                ),
               ),
-            ),
-          ],
+
+              // Arrow droite
+              Positioned(
+                right: 8,
+                top: 0,
+                bottom: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    _carouselController.nextPage(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: const Icon(Icons.arrow_forward_ios, size: 16),
+                ),
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 8),
         Row(
@@ -128,13 +115,4 @@ class _BookCarouselState extends State<BookCarousel> {
       ],
     );
   }
-}
-
-extension on CarouselController {
-  void previousPage({required Duration duration, required Cubic curve}) {}
-
-  void nextPage({required Duration duration, required Cubic curve}) {}
-
-  void animateToPage(int key,
-      {required Duration duration, required Cubic curve}) {}
 }

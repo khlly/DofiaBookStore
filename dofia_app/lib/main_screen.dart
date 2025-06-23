@@ -2,6 +2,7 @@ import 'package:dofia_the_book/data/user_provider.dart';
 import 'package:dofia_the_book/screens/home_screen.dart';
 import 'package:dofia_the_book/widgets/custom_app_bar.dart';
 import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
+import 'package:dofia_the_book/screens/auth/profile_screen.dart';
 import 'package:flutter/material.dart' hide SearchBar;
 import 'package:provider/provider.dart';
 import 'screens/Guest_Pages_fav_cart.dart';
@@ -31,7 +32,8 @@ class _MainScreenState extends State<MainScreen>
       guest_title_page: 'My Favorite',
       key_word_page: 'Favorite',
     ),
-    const GuestPagesFavCart(guest_title_page: 'My Cart', key_word_page: 'Cart')
+    const GuestPagesFavCart(guest_title_page: 'My Cart', key_word_page: 'Cart'),
+    const ProfileScreen(),
   ];
 
   Widget _drawerTile({required IconData icon, required String title}) {
@@ -45,12 +47,15 @@ class _MainScreenState extends State<MainScreen>
   }
 
   void _onItemTapped(int index) {
-    // Navigator.pop(context);
-    Future.delayed(const Duration(milliseconds: 200), () {
+    print("Item tapped: $index");
+    if (index < _pages.length) {
+      if (_scaffoldKey.currentState!.isDrawerOpen) {
+        Navigator.pop(context); // ferme drawer s'il est ouvert
+      }
       setState(() {
         _selectedIndex = index;
       });
-    });
+    }
   }
 
   @override
@@ -177,6 +182,7 @@ class _MainScreenState extends State<MainScreen>
                         if (isLoggedIn) {
                           await userProvider
                               .logoutAndClearPrefs(); // à créer dans UserProvider si pas encore
+                          await userProvider.logoutAndClearPrefs();
                         } else {
                           Navigator.push(
                             context,
