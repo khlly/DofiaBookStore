@@ -26,15 +26,31 @@ class _MainScreenState extends State<MainScreen>
   late AnimationController _controller;
   late Animation<Offset> _drawerOffset;
 
-  final List<Widget> _pages = [
-    const HomeScreen(),
-    const GuestPagesFavCart(
-      guest_title_page: 'My Favorite',
-      key_word_page: 'Favorite',
-    ),
-    const GuestPagesFavCart(guest_title_page: 'My Cart', key_word_page: 'Cart'),
-    const ProfileScreen(),
-  ];
+  List<Widget> get _pages => [
+        HomeScreen(
+          onGoToCart: _onGotoCart,
+          onGoToFavorite: _onGotoFavorite,
+        ),
+        const GuestPagesFavCart(
+          guest_title_page: 'My Favorite',
+          key_word_page: 'Favorite',
+        ),
+        const GuestPagesFavCart(
+            guest_title_page: 'My Cart', key_word_page: 'Cart'),
+        const ProfileScreen(),
+      ];
+
+  void _onGotoCart() {
+    setState(() {
+      _selectedIndex = 2;
+    });
+  }
+
+  void _onGotoFavorite() {
+    setState(() {
+      _selectedIndex = 1;
+    });
+  }
 
   Widget _drawerTile({required IconData icon, required String title}) {
     return ListTile(
@@ -80,36 +96,37 @@ class _MainScreenState extends State<MainScreen>
     });
   }
 
+  Future<bool> _handleWillPop() async {
+    if (_selectedIndex != 0) {
+      setState(() {
+        _selectedIndex = 0;
+      });
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget bodyContent;
-    Widget menuDrawer;
     final userProvider = Provider.of<UserProvider>(context);
     final isLoggedIn = userProvider.isLoggedIn;
     final username = userProvider.username ?? 'Guest User';
 
-    if (_selectedIndex == 0) {
-      bodyContent = SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const WelcomeMessage(),
-              const SearchBar(),
-              const BookCarousel(),
-              _pages[0],
-              Container(
-                height: 115,
-                color: const Color(0xFFE0F7FF),
-              )
-            ],
-          ),
-        ),
-      );
-    } else {
-      bodyContent = _pages[_selectedIndex];
-    }
+    Widget bodyContent = _selectedIndex == 0
+        ? SingleChildScrollView(
+            child: Column(
+              children: [
+                const WelcomeMessage(),
+                const SearchBar(),
+                const BookCarousel(),
+                _pages[0], // HomeScreenGuest with callbacks
+                const SizedBox(height: 115),
+              ],
+            ),
+          )
+        : _pages[_selectedIndex]; // Directly render selected page
 
-    menuDrawer = SizedBox(
+    Widget menuDrawer = SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Drawer(
         elevation: 16,
@@ -180,8 +197,6 @@ class _MainScreenState extends State<MainScreen>
                       onPressed: () async {
                         Navigator.pop(context);
                         if (isLoggedIn) {
-                          await userProvider
-                              .logoutAndClearPrefs(); // à créer dans UserProvider si pas encore
                           await userProvider.logoutAndClearPrefs();
                         } else {
                           Navigator.push(
@@ -203,35 +218,41 @@ class _MainScreenState extends State<MainScreen>
       ),
     );
 
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: CustomAppBar(
-        title: 'DofiaTheBook',
-        onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
-      ),
-      drawer: menuDrawer,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Container(
-              color: const Color(0xFFE0F7FF),
-              child: bodyContent,
-            ),
+    return WillPopScope(
+        onWillPop: _handleWillPop,
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: CustomAppBar(
+            title: 'DofiaTheBook',
+            onMenuTap: () => _scaffoldKey.currentState?.openDrawer(),
           ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: CustomBottomNavBar(
-                selectedIndex: _selectedIndex,
-                onItemTapped: _onItemTapped,
+          drawer: menuDrawer,
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: Container(
+                  color: const Color(0xFFE0F7FF),
+                  child: bodyContent,
+                ),
               ),
-            ),
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: CustomBottomNavBar(
+                    selectedIndex: _selectedIndex,
+                    onItemTapped: _onItemTapped,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
+  }
+
+  void onGoToCart() {
+    setState(() => _selectedIndex = 2);
   }
 }

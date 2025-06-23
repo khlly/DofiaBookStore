@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/user_provider.dart';
@@ -14,6 +15,9 @@ class BookCardCarousel extends StatefulWidget {
   final bool isFavorite;
   final bool isDiscounted;
 
+  final VoidCallback OnGoToFavorite;
+  final VoidCallback OnGoToCart;
+
   const BookCardCarousel({
     super.key,
     required this.imagePath,
@@ -25,6 +29,8 @@ class BookCardCarousel extends StatefulWidget {
     this.oldPrice,
     this.isFavorite = false,
     this.isDiscounted = false,
+    required this.OnGoToFavorite,
+    required this.OnGoToCart,
   });
 
   @override
@@ -97,7 +103,13 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
                 top: 4,
                 right: 4,
                 child: GestureDetector(
-                  onTap: _toggleFavorite,
+                  onTap: () {
+                    _toggleFavorite();
+                    if (_isFavorite) {
+                      widget
+                          .OnGoToFavorite(); // Navigate to Favorite page after toggling on
+                    }
+                  },
                   child: Icon(
                     _isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: _isFavorite ? Colors.red : Colors.grey.shade600,
@@ -138,7 +150,9 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
           ),
           // const SizedBox(height: 8),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              widget.OnGoToCart();
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF00CCFF),
               minimumSize: const Size(double.infinity, 32),

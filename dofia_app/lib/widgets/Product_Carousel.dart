@@ -3,10 +3,17 @@ import 'Book_card_carousel.dart';
 
 class ProductCarousel extends StatelessWidget {
   final dynamic title;
-
   final dynamic books;
 
-  const ProductCarousel({required this.title, required this.books, super.key});
+  final VoidCallback onGoToCart;
+  final VoidCallback onGoToFavorite;
+
+  const ProductCarousel(
+      {required this.title,
+      required this.books,
+      super.key,
+      required this.onGoToCart,
+      required this.onGoToFavorite});
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +52,8 @@ class ProductCarousel extends StatelessWidget {
                     publishDate: book.publishDate,
                     category: book.category,
                     price: book.price,
+                    OnGoToFavorite: onGoToFavorite,
+                    OnGoToCart: onGoToCart,
                   ),
                 );
               },
