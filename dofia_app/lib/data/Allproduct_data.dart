@@ -2,7 +2,7 @@ import '../widgets/Book_card_carousel.dart';
 
 final List<BookCardCarousel> books = [
   BookCardCarousel(
-    imagePath: 'assets/images/Atomic-habit-bookCover.png',
+    imagePath: 'assets/images/book_covers/Atomic-habit-bookCover.png',
     title: 'Book 1',
     author: 'Author A',
     publishDate: '2018',
@@ -12,7 +12,7 @@ final List<BookCardCarousel> books = [
     OnGoToCart: () {},
   ),
   BookCardCarousel(
-    imagePath: 'assets/images/Atomic-habit-bookCover.png',
+    imagePath: 'assets/images/book_covers/Atomic-habit-bookCover.png',
     title: 'Book 2',
     author: 'Author B',
     publishDate: '2018',
@@ -22,7 +22,7 @@ final List<BookCardCarousel> books = [
     OnGoToCart: () {},
   ),
   BookCardCarousel(
-    imagePath: 'assets/images/Atomic-habit-bookCover.png',
+    imagePath: 'assets/images/book_covers/Atomic-habit-bookCover.png',
     title: 'Book 3',
     author: 'Author C',
     publishDate: '2018',
@@ -32,7 +32,7 @@ final List<BookCardCarousel> books = [
     OnGoToCart: () {},
   ),
   BookCardCarousel(
-    imagePath: 'assets/images/Atomic-habit-bookCover.png',
+    imagePath: 'assets/images/book_covers/Atomic-habit-bookCover.png',
     title: 'Book 4',
     author: 'Author D',
     publishDate: '2018',
@@ -42,7 +42,7 @@ final List<BookCardCarousel> books = [
     OnGoToCart: () {},
   ),
   BookCardCarousel(
-    imagePath: 'assets/images/Atomic-habit-bookCover.png',
+    imagePath: 'assets/images/book_covers/Atomic-habit-bookCover.png',
     title: 'Book 5',
     author: 'Author E',
     publishDate: '2018',

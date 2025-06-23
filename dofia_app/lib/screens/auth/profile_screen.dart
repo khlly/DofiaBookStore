@@ -52,60 +52,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(title: 'My Profile'),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage('assets/share/logoDofia.png'),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  'My Profile - Customer',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 24),
-                _buildTextField(_nameController, 'Name'),
-                _buildTextField(_genderController, 'Gender'),
-                _buildTextField(_dobController, 'Date of Birth'),
-                _buildTextField(_phoneController, 'Phone Number'),
-                _buildTextField(_emailController, 'Email'),
-                _buildTextField(_addressController, 'Address'),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _updateProfile,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.cyanAccent[400],
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: const Text(
-                    'Update',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const CircleAvatar(
+              radius: 40,
+              backgroundImage: AssetImage('assets/share/logoDofia.png'),
             ),
-          ),
+            const SizedBox(height: 12),
+            const Text(
+              'My Profile - Customer',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 24),
+            _buildTextField(_nameController, 'Name'),
+            _buildTextField(_genderController, 'Gender'),
+            _buildTextField(_dobController, 'Date of Birth'),
+            _buildTextField(_phoneController, 'Phone Number'),
+            _buildTextField(_emailController, 'Email'),
+            _buildTextField(_addressController, 'Address'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _updateProfile,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.cyanAccent[400],
+                minimumSize: const Size.fromHeight(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: const Text(
+                'Update',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: 3,
-        onItemTapped: (index) {
-          // TODO: handle navigation
-        },
       ),
     );
   }
