@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen>
   }
 
   void _onItemTapped(int index) {
-    Navigator.pop(context);
+    // Navigator.pop(context);
     Future.delayed(const Duration(milliseconds: 200), () {
       setState(() {
         _selectedIndex = index;
@@ -82,7 +82,6 @@ class _MainScreenState extends State<MainScreen>
     final userProvider = Provider.of<UserProvider>(context);
     final isLoggedIn = userProvider.isLoggedIn;
     final username = userProvider.username ?? 'Guest User';
-
 
     if (_selectedIndex == 0) {
       bodyContent = SafeArea(
@@ -176,7 +175,8 @@ class _MainScreenState extends State<MainScreen>
                       onPressed: () async {
                         Navigator.pop(context);
                         if (isLoggedIn) {
-                          await userProvider.logoutAndClearPrefs(); // à créer dans UserProvider si pas encore
+                          await userProvider
+                              .logoutAndClearPrefs(); // à créer dans UserProvider si pas encore
                         } else {
                           Navigator.push(
                             context,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OrderStatusWidget extends StatelessWidget {
   final int currentStep;
 
-  OrderStatusWidget({required this.currentStep});
+  OrderStatusWidget({super.key, required this.currentStep});
 
   final List<String> steps = [
     "Pending",

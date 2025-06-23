@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OrderTracker extends StatelessWidget {
   final int currentStep;
 
-  OrderTracker({required this.currentStep});
+  OrderTracker({super.key, required this.currentStep});
 
   final List<String> statuses = [
     "Pending",
@@ -43,8 +43,7 @@ class OrderTracker extends StatelessWidget {
                       color: isActive ? Colors.blue : Colors.grey.shade300,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.check,
-                        color: Colors.white, size: 14),
+                    child: Icon(Icons.check, color: Colors.white, size: 14),
                   ),
 
                   SizedBox(height: 8),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class BookCarousel extends StatefulWidget {
-  const BookCarousel({Key? key}) : super(key: key);
+  const BookCarousel({super.key});
 
   @override
   State<BookCarousel> createState() => _BookCarouselState();

@@ -1,7 +1,6 @@
 import 'package:dofia_the_book/data/user_storage.dart';
 import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:dofia_the_book/data/user_provider.dart';
 
@@ -52,7 +51,8 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFormField(
             controller: _phoneOrEmailController,
-            decoration: inputDecoration.copyWith(hintText: 'Phone Number or Email'),
+            decoration:
+                inputDecoration.copyWith(hintText: 'Phone Number or Email'),
             keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
