@@ -116,21 +116,11 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  widget.imagePath,
-                  height: 100,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.grey[200],
-                      height: 100,
-                      child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
-                    );
-                  },
-                ),
-              ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(widget.imagePath,
+                        height: 100, fit: BoxFit.cover),
+                  ),
                 ],
               ),
               Positioned(
@@ -166,7 +156,6 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
           Text(
             widget.title,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -188,7 +177,6 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

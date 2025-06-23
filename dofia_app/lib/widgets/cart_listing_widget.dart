@@ -24,7 +24,7 @@ class CartListWidget extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           child: Container(
-            height: 144,
+            height: 164,
             decoration: BoxDecoration(
               color: Color(0xFFD0E8EE),
               borderRadius: BorderRadius.circular(10),
