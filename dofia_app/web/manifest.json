@@ -1,6 +1,6 @@
 {
-    "name": "dofia_app",
-    "short_name": "dofia_app",
+    "name": "dofia_the_book",
+    "short_name": "dofia_the_book",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
