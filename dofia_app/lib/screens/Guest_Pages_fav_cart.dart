@@ -31,21 +31,19 @@ class _GuestPagesFavCartState extends State<GuestPagesFavCart> {
         ),
         Expanded(
           child: SingleChildScrollView(
-            child: SizedBox(
-              height: 530,
-              child: Center(
-                child: RichText(
-                  softWrap: true,
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black54,
+            child: Center(
+              child: RichText(
+                softWrap: true,
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black54,
+                  ),
+                  children: [
+                    const TextSpan(
+                      text: "Your ",
                     ),
-                    children: [
-                      const TextSpan(
-                        text: "Your ",
-                      ),
                       TextSpan(
                           text: widget.key_word_page,
                           style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -62,12 +60,11 @@ class _GuestPagesFavCartState extends State<GuestPagesFavCart> {
                       const TextSpan(
                         text: " first\n to add & save your ",
                       ),
-                      TextSpan(
-                          text: widget.key_word_page,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      const TextSpan(text: " here.")
-                    ],
-                  ),
+                    TextSpan(
+                        text: widget.key_word_page,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    const TextSpan(text: " here.")
+                  ],
                 ),
               ),
             ),

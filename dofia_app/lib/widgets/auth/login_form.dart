@@ -1,7 +1,6 @@
 import 'package:dofia_the_book/data/user_storage.dart';
 import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:dofia_the_book/data/user_provider.dart';
 
