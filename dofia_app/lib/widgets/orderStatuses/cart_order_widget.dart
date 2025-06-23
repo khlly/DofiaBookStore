@@ -31,8 +31,10 @@ class CartOrderWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/images/Atomic-habit-bookCover.png',
-                    width: 60, height: 90),
+                Image.asset(
+                    'assets/images/book_covers/Atomic-habit-bookCover.png',
+                    width: 60,
+                    height: 90),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
