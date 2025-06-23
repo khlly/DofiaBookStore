@@ -28,7 +28,7 @@ Dofia BookStore is an online bookstore Flutter application allowing users to bro
 
 ### 1. clone project
 ```bash
-git clone https://github.com/ton-utilisateur/dofia-bookstore.git
+git clone https://github.com/khlly/DofiaBookStore.git
 cd dofia-bookstore
 ```
 
