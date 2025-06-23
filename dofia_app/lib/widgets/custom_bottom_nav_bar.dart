@@ -13,60 +13,45 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
+        borderRadius: BorderRadius.circular(40),
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.withValues(),
-            spreadRadius: 1.0,
-            blurRadius: 5,
-            offset: const Offset(0, -2),
+            color: Colors.black12,
+            blurRadius: 20,
+            offset: Offset(0, 5),
           ),
         ],
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: selectedIndex,
-            onTap: onItemTapped,
-            backgroundColor: Colors.white,
-            // selectedItemColor: Colors.black,
-            // unselectedItemColor: Colors.grey[600],
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            elevation: 0,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_sharp),
-                label: 'Favorites',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined),
-                label: 'Cart',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline),
-                label: 'Profile',
-              ),
-            ],
-          ),
-          // Container(
-          //   height: 10,
-          //   width: 40,
-          //   margin: const EdgeInsets.only(bottom: 20),
-          //   decoration: BoxDecoration(
-          //     color: Colors.black,
-          //     borderRadius: BorderRadius.circular(2),
-          //   ),
-          //   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-          // ),
+          _navIcon(Icons.home, 0),
+          _navIcon(Icons.favorite, 1),
+          _navIcon(Icons.shopping_cart_outlined, 2),
+          _navIcon(Icons.person, 3),
         ],
+      ),
+    );
+  }
+
+  Widget _navIcon(IconData icon, int index) {
+    final bool isSelected = selectedIndex == index;
+
+    return GestureDetector(
+      onTap: () => onItemTapped(index),
+      child: CircleAvatar(
+        backgroundColor:
+            isSelected ? Colors.lightBlueAccent : Colors.transparent,
+        radius: 24,
+        child: Icon(
+          icon,
+          color: isSelected ? Colors.white : Colors.black54,
+          size: 24,
+        ),
       ),
     );
   }

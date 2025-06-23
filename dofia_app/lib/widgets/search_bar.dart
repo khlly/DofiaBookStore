@@ -6,7 +6,7 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 10),
       color: const Color(0xFFE1F5FE), // Light blue background like your UI
       child: Container(
         decoration: BoxDecoration(

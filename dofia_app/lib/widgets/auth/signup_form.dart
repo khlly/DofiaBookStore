@@ -1,4 +1,8 @@
+import 'package:dofia_the_book/data/user_provider.dart';
+import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUpForm extends StatefulWidget {
   // Add a callback function
@@ -14,11 +18,15 @@ class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _contactController = TextEditingController(); // email ou phone
 
   @override
   void dispose() {
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+    _usernameController.dispose();
+    _contactController.dispose();
     super.dispose();
   }
 
@@ -31,13 +39,22 @@ class _SignUpFormState extends State<SignUpForm> {
 
   // check phone format
   // basic regex
-  bool isValidPhoneNumber(String phoneNumber) {
-    // delete non numerical characters
-    String cleanedNumber = phoneNumber.replaceAll(RegExp(r'\S'), '');
-    // phone between 7 and 15 number
-    return cleanedNumber.length >= 7 && cleanedNumber.length <= 15;
-    // can use package like 'phone_form_field' for more robustess
+bool isValidPhoneNumber(String phoneNumber) {
+  // Delete spaces
+  String cleanedNumber = phoneNumber.replaceAll(RegExp(r'\s'), '');
+
+  // If begin with +, delete it but valid
+  if (cleanedNumber.startsWith('+')) {
+    cleanedNumber = cleanedNumber.substring(1);
   }
+
+  // If only numbers 
+  if (!RegExp(r'^\d*$').hasMatch(cleanedNumber)) {
+    return false; // Not only numbers 
+  }
+
+  return cleanedNumber.length >= 7 && cleanedNumber.length <= 15;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +112,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
+                  controller: _usernameController,
                   decoration: inputDecoration.copyWith(hintText: 'Username'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -105,6 +123,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
+                  controller: _contactController,
                   decoration: inputDecoration.copyWith(hintText: 'Phone Number or Email'),
                   keyboardType: TextInputType.emailAddress, // Propose @ et . pour l'email
                   validator: (value) {
@@ -160,18 +179,40 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                     minimumSize: const Size.fromHeight(45),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Form successfully submitted !')),
-                      );
-                      // TODO: Add the actual registration logic here
-                                            if (widget.onSignUpSuccess != null) {
-                        widget.onSignUpSuccess!();
-                      }
+                      final contact = _contactController.text.trim();
+                      final username = _usernameController.text.trim();
 
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+
+                      // Save mapping: contact (email/phone) -> username
+                      await prefs.setString('user:$contact', username);
+
+                      // Save current session
+                      await prefs.setString('current_user', username);
+
+                      // Connect user
+                      final userProvider =
+                          Provider.of<UserProvider>(context, listen: false);
+                      userProvider.login(username);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Account created & logged in!')),
+                      );
+
+                      if (widget.onSignUpSuccess != null) {
+                        widget.onSignUpSuccess!();
+                      } else {
+                        // Optional: redirect to home if no callback provided
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (_) => const MainScreen()),
+                        );
+                      }
                     }
-                    
                   },
                   child: const Text(
                     'Create Account',

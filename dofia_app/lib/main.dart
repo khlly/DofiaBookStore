@@ -1,14 +1,18 @@
-import 'package:dofia_the_book/screens/auth/login_screen.dart';
-import 'package:dofia_the_book/screens/auth/signup_screen.dart';
-//import 'package:dofia_the_book/screens/home_screen.dart';
+import 'package:dofia_the_book/main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]).then((_) {
+    runApp(const DofiaTheBookApp());
+  });
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DofiaTheBookApp extends StatelessWidget {
+  const DofiaTheBookApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +20,10 @@ class MyApp extends StatelessWidget {
       title: 'Dofia BookStore',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // Ajoute ici tes thèmes de couleurs et de texte comme discuté précédemment
+        scaffoldBackgroundColor: const Color(0xFFE0F7FF),
       ),
-      home: const LoginScreen(), // C'est ici que tu utilises ton HomeScreen
+      home: const MainScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
