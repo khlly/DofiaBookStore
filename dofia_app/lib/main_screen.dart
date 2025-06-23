@@ -1,4 +1,6 @@
 import 'package:dofia_the_book/data/user_provider.dart';
+import 'package:dofia_the_book/screens/cart_fav_screen.dart';
+import 'package:dofia_the_book/screens/cart_list_guest.dart';
 import 'package:dofia_the_book/screens/home_screen.dart';
 import 'package:dofia_the_book/widgets/custom_app_bar.dart';
 import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
@@ -31,12 +33,8 @@ class _MainScreenState extends State<MainScreen>
           onGoToCart: _onGotoCart,
           onGoToFavorite: _onGotoFavorite,
         ),
-        const GuestPagesFavCart(
-          guest_title_page: 'My Favorite',
-          key_word_page: 'Favorite',
-        ),
-        const GuestPagesFavCart(
-            guest_title_page: 'My Cart', key_word_page: 'Cart'),
+        const CartFavScreen(),
+        const CartListGuest(),
         const ProfileScreen(),
       ];
 
