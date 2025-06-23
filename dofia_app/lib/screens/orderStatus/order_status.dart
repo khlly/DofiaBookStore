@@ -1,14 +1,26 @@
+import 'package:dofia_the_book/data/cart_provider.dart';
+import 'package:dofia_the_book/main_screen.dart';
 import 'package:dofia_the_book/widgets/orderStatuses/card_detail_wdiget.dart';
 import 'package:dofia_the_book/widgets/orderStatuses/card_status_widget.dart';
 import 'package:dofia_the_book/widgets/orderStatuses/cart_order_widget.dart';
 import 'package:dofia_the_book/widgets/orderStatuses/drop_down_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderStatusScreen extends StatelessWidget {
   const OrderStatusScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final cartProvider = context.watch<CartProvider>();
+    final cartItems = cartProvider.cartItems;
+
+    final subTotal = cartProvider.totalPrice;
+    final discount = 10.0; // fixe ou calculé dynamiquement
+    final tax = 5.0; // idem
+    final total = subTotal - discount + tax;
+
     return Scaffold(
       appBar: AppBar(title: Text('My Order')),
       body: Padding(
@@ -19,9 +31,7 @@ class OrderStatusScreen extends StatelessWidget {
               OrderStatusWidget(
                 currentStep: 2,
               ),
-              CartOrderWidget(),
-              CartOrderWidget(),
-              CartOrderWidget(),
+              ...cartItems.map((book) => CartOrderWidget(book: book)).toList(),
               TextButton(
                   style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -31,7 +41,12 @@ class OrderStatusScreen extends StatelessWidget {
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (_) => const MainScreen()),
+                    );
+                  },
                   child: Text("Add More")),
 
               SizedBox(height: 16),
@@ -62,8 +77,6 @@ class OrderStatusScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    DropDownWidget(),
-                    DropDownWidget(),
                     DropDownWidget(),
                   ],
                 ),
@@ -117,10 +130,10 @@ class OrderStatusScreen extends StatelessWidget {
               SizedBox(height: 8),
               CardDetailWidget(
                 title: "Order Details",
-                subTotal: 120.00,
-                discount: 10.00,
-                tax: 5.00,
-                total: 115.00,
+                subTotal: subTotal,
+                discount: discount,
+                tax: tax,
+                total: total,
               ),
             ],
           ),

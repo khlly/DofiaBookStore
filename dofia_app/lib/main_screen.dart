@@ -1,7 +1,10 @@
+import 'package:dofia_the_book/data/book_provider.dart';
 import 'package:dofia_the_book/data/user_provider.dart';
+import 'package:dofia_the_book/models/book_model.dart';
 import 'package:dofia_the_book/screens/cart_fav_screen.dart';
-import 'package:dofia_the_book/screens/cart_list_guest.dart';
+import 'package:dofia_the_book/screens/cart_list_screen.dart';
 import 'package:dofia_the_book/screens/home_screen.dart';
+import 'package:dofia_the_book/widgets/Book_card_carousel.dart';
 import 'package:dofia_the_book/widgets/custom_app_bar.dart';
 import 'package:dofia_the_book/widgets/custom_bottom_nav_bar.dart';
 import 'package:dofia_the_book/screens/auth/profile_screen.dart';
@@ -26,21 +29,51 @@ class _MainScreenState extends State<MainScreen>
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isDrawerOpen = false;
   late AnimationController _controller;
+  // ignore: unused_field
   late Animation<Offset> _drawerOffset;
 
-  List<Widget> get _pages => [
-        HomeScreen(
-          onGoToCart: _onGotoCart,
-          onGoToFavorite: _onGotoFavorite,
-        ),
-        const GuestPagesFavCart(
-          guest_title_page: 'My Favorite',
-          key_word_page: 'Favorite',
-        ),
-        const GuestPagesFavCart(
-            guest_title_page: 'My Cart', key_word_page: 'Cart'),
-        const ProfileScreen(),
-      ];
+List<Widget> get _pages {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  final isLoggedIn = userProvider.isLoggedIn;
+
+  return [
+    HomeScreen(
+      onGoToCart: _onGotoCart,
+      onGoToFavorite: _onGotoFavorite,
+    ),
+    isLoggedIn
+        ? const CartFavScreen()
+        : const GuestPagesFavCart(
+            guest_title_page: 'My Favorite',
+            key_word_page: 'Favorite',
+          ),
+    isLoggedIn
+        ? const CartList()
+        : const GuestPagesFavCart(
+            guest_title_page: 'My Cart',
+            key_word_page: 'Cart',
+          ),
+    const ProfileScreen(),
+    ];
+  }
+
+  Widget buildCarouselCard(BookItem book, BuildContext context) {
+    return BookCardCarousel(
+      imagePath: book.imagePath,
+      title: book.title,
+      category: book.category,
+      author: book.author,
+      publishDate: book.publishDate,
+      price: book.price,
+      OnGoToFavorite: () {
+        Provider.of<BookProvider>(context, listen: false).addToFavorites(book);
+      },
+      OnGoToCart: () {
+        // Ajout panier
+      },
+    );
+  }
+
 
   void _onGotoCart() {
     setState(() {

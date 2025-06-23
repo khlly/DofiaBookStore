@@ -1,8 +1,9 @@
-import 'package:flutter/gestures.dart';
+import 'package:dofia_the_book/data/book_provider.dart';
+import 'package:dofia_the_book/data/cart_provider.dart';
+import 'package:dofia_the_book/models/book_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/user_provider.dart';
-import '../screens/auth/login_screen.dart';
 
 class BookCardCarousel extends StatefulWidget {
   final String imagePath;
@@ -17,6 +18,7 @@ class BookCardCarousel extends StatefulWidget {
 
   final VoidCallback OnGoToFavorite;
   final VoidCallback OnGoToCart;
+
 
   const BookCardCarousel({
     super.key,
@@ -46,15 +48,35 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
     _isFavorite = widget.isFavorite; // Initial state
   }
 
+  Widget buildCarouselCard(BookItem book, BuildContext context) {
+    return BookCardCarousel(
+      imagePath: book.imagePath,
+      title: book.title,
+      author: "Unknown", // si tu veux l’ajouter au modèle, fais-le ici
+      publishDate: "2018", // idem
+      category: book.category,
+      price: book.price,
+      OnGoToFavorite: () {
+        Provider.of<BookProvider>(context, listen: false).addToFavorites(book);
+      },
+      OnGoToCart: () {
+        // Ajout panier
+      },
+    );
+  }
+
   void _toggleFavorite() {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     if (!userProvider.isLoggedIn) {
       // Si non connecté, redirection vers login
+      /*
       Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => const LoginScreen()),
       );
+      */
+      widget.OnGoToFavorite();
       return;
     }
 
@@ -68,6 +90,8 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    final bookprovider = Provider.of<BookProvider>(context, listen: false);
+
     return Container(
       width: 150,
       padding: const EdgeInsets.all(10),
@@ -92,11 +116,21 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(widget.imagePath,
-                        height: 100, fit: BoxFit.cover),
-                  ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  widget.imagePath,
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[200],
+                      height: 100,
+                      child: Icon(Icons.broken_image, size: 40, color: Colors.grey),
+                    );
+                  },
+                ),
+              ),
                 ],
               ),
               Positioned(
@@ -106,8 +140,21 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
                   onTap: () {
                     _toggleFavorite();
                     if (_isFavorite) {
-                      widget
-                          .OnGoToFavorite(); // Navigate to Favorite page after toggling on
+                     // widget.OnGoToFavorite(); // Navigate to Favorite page after toggling on
+                      // heart turn red
+                      final book = BookItem(
+                        title: widget.title,
+                        category: widget.category,
+                        author: widget.author,
+                        publishDate: widget.publishDate,
+                        imagePath: widget.imagePath,
+                        price: widget.price,
+                      );
+
+                      bookprovider.addToFavorites(book);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Book add to favorites.')),
+                      );
                     }
                   },
                   child: Icon(
@@ -119,13 +166,29 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
               ),
             ],
           ),
+          const SizedBox(height: 8),
           Text(
             widget.title,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
           ),
-          Text("${widget.author} | ${widget.publishDate}",
-              style: const TextStyle(fontSize: 12)),
-          Text(widget.category, style: const TextStyle(fontSize: 12)),
+          Text(
+            "${widget.author} | ${widget.publishDate}",
+            style: const TextStyle(fontSize: 12),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+          Text(
+            widget.category,
+            style: const TextStyle(fontSize: 12),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -151,7 +214,29 @@ class _BookCardCarouselState extends State<BookCardCarousel> {
           // const SizedBox(height: 8),
           ElevatedButton(
             onPressed: () {
-              widget.OnGoToCart();
+              final userProvider = Provider.of<UserProvider>(context, listen: false);
+              final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
+              if (!userProvider.isLoggedIn) {
+                widget.OnGoToCart();
+              } else {
+                final book = BookItem(
+                  title: widget.title,
+                  category: widget.category,
+                  author: widget.author,
+                  publishDate: widget.publishDate,
+                  imagePath: widget.imagePath,
+                  price: widget.price,
+                );
+
+                cartProvider.addToCart(book);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text('Book add to cart.')),
+                );
+              }
+
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF00CCFF),

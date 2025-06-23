@@ -1,7 +1,17 @@
+import 'package:dofia_the_book/data/book_provider.dart';
+import 'package:dofia_the_book/models/book_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartFavWidget extends StatelessWidget {
-  const CartFavWidget({super.key});
+  final BookItem book;
+  final VoidCallback? onRemove;
+
+  const CartFavWidget({
+    super.key,
+    required this.book,
+    this.onRemove,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -10,111 +20,50 @@ class CartFavWidget extends StatelessWidget {
       child: Container(
         height: 144,
         decoration: BoxDecoration(
-          color: Color(0xFFD0E8EE),
+          color: const Color(0xFFD0E8EE),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
               color: const Color.fromARGB(255, 251, 250, 250).withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              spacing: 13,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                    'assets/images/book_covers/Atomic-habit-bookCover.png',
-                    width: 60,
-                    height: 90),
+                Image.asset(book.imagePath, width: 60, height: 90),
+                const SizedBox(width: 13),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Atomic Habits",
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      "Motivation, Self-help",
-                      style: TextStyle(
-                          color: Color(0xFF00637C),
-                          fontSize: 10,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "Paper Base Edition",
-                      style: TextStyle(
-                          color: Color(0xFF00637C),
-                          fontSize: 10,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "Price: \$15.50",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "Total: \$31.00",
-                      style: TextStyle(
-                          color: Color(0xFF00637C),
-                          fontSize: 15,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
-                    ),
+                    Text(book.title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                    Text(book.category, style: const TextStyle(fontSize: 10, color: Color(0xFF00637C))),
+                    Text(book.edition, style: const TextStyle(fontSize: 10, color: Color(0xFF00637C))),
+                    Text("Price: \$${book.price.toStringAsFixed(2)}", style: const TextStyle(fontSize: 15)),
+                    Text("Total: \$${book.total.toStringAsFixed(2)}", style: const TextStyle(fontSize: 15, color: Color(0xFF00637C))),
                   ],
                 ),
               ],
             ),
-            Row(
-              spacing: 10,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "x2",
-                  style: TextStyle(
-                      color: Color(0xFF00637C),
-                      fontSize: 25,
-                      fontFamily: 'inter',
-                      fontWeight: FontWeight.w500),
+                Text("x${book.quantity}", style: const TextStyle(fontSize: 25, color: Color(0xFF00637C))),
+                IconButton(
+                  onPressed: onRemove ??
+                      () {
+                        Provider.of<BookProvider>(context, listen: false).removeFromFavorites(book);
+                      },
+                  icon: const Icon(Icons.delete_outline, color: Colors.red),
                 ),
-                SizedBox(
-                  height: 144,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                     
-                      IconButton(
-                        iconSize: 24,
-                        splashRadius: 24,
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.all(2),
-                        onPressed: () {},
-                        icon: Icon(Icons.delete_outline, color: Colors.red),
-                      ),
-
-                    ],
-                  ),
-                )
               ],
-            )
+            ),
           ],
         ),
       ),

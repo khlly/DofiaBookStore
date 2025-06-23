@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:dofia_the_book/models/book_model.dart';
 
 class CartOrderWidget extends StatelessWidget {
-  const CartOrderWidget({super.key});
+  final BookItem book;
+
+  const CartOrderWidget({Key? key, required this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class CartOrderWidget extends StatelessWidget {
               color: const Color.fromARGB(255, 251, 250, 250).withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -27,110 +30,79 @@ class CartOrderWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              spacing: 13,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                    'assets/images/book_covers/Atomic-habit-bookCover.png',
-                    width: 60,
-                    height: 90),
+                  book.imagePath,
+                  width: 60,
+                  height: 90,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(width: 13),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Atomic Habits",
+                      book.title,
                       style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.bold),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'inter',
+                      ),
                     ),
                     Text(
-                      "Motivation, Self-help",
+                      "${book.category}, ${book.author}",
                       style: TextStyle(
-                          color: Color(0xFF00637C),
-                          fontSize: 10,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
+                        color: Color(0xFF00637C),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'inter',
+                      ),
                     ),
                     Text(
-                      "Paper Base Edition",
+                      "Edition: ${book.edition}",
                       style: TextStyle(
-                          color: Color(0xFF00637C),
-                          fontSize: 10,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
+                        color: Color(0xFF00637C),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'inter',
+                      ),
                     ),
                     Text(
-                      "Price: \$15.50",
+                      "Price: \$${book.price.toStringAsFixed(2)}",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'inter',
+                      ),
                     ),
                     Text(
-                      "Total: \$31.00",
+                      "Total: \$${(book.price * book.quantity).toStringAsFixed(2)}",
                       style: TextStyle(
-                          color: Color(0xFF00637C),
-                          fontSize: 15,
-                          fontFamily: 'inter',
-                          fontWeight: FontWeight.w500),
+                        color: Color(0xFF00637C),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'inter',
+                      ),
                     ),
                   ],
                 ),
               ],
             ),
-            Row(
-              spacing: 10,
-              children: [
-                Text(
-                  "x2",
-                  style: TextStyle(
-                      color: Color(0xFF00637C),
-                      fontSize: 25,
-                      fontFamily: 'inter',
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(
-                  height: 144,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        iconSize: 24,
-                        splashRadius: 24,
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.all(2),
-                        onPressed: () {},
-                        icon: Icon(Icons.remove_circle_outline,
-                            color: Colors.red),
-                      ),
-                      IconButton(
-                        iconSize: 24,
-                        splashRadius: 24,
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.all(2),
-                        onPressed: () {},
-                        icon: Icon(Icons.delete_outline, color: Colors.red),
-                      ),
-                      IconButton(
-                        iconSize: 24,
-                        splashRadius: 24,
-                        visualDensity: VisualDensity.compact,
-                        padding: EdgeInsets.all(2),
-                        icon:
-                            Icon(Icons.add_circle_outline, color: Colors.green),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            )
+            Text(
+              "x${book.quantity}",
+              style: TextStyle(
+                color: Color(0xFF00637C),
+                fontSize: 25,
+                fontFamily: 'inter',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            // Tu peux ajouter des boutons ici si tu veux modifier la quantité ou supprimer
           ],
         ),
       ),

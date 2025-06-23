@@ -17,7 +17,6 @@ class ProductCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       constraints: const BoxConstraints(maxHeight: 350),
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20),
