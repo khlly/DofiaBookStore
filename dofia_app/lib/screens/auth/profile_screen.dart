@@ -23,7 +23,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    _nameController = TextEditingController(text: userProvider.username);
+    _nameController = TextEditingController(text: userProvider.username ?? '');
+    _genderController.text = userProvider.gender ?? '';
+    _dobController.text = userProvider.dob ?? '';
+    _phoneController.text = userProvider.phone ?? '';
+    _emailController.text = userProvider.email ?? '';
+    _addressController.text = userProvider.address ?? '';
+  }
+
+  void _updateProfile() {
+    if (_formKey.currentState!.validate()) {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.updateProfile(
+        name: _nameController.text,
+        gender: _genderController.text,
+        dob: _dobController.text,
+        phone: _phoneController.text,
+        email: _emailController.text,
+        address: _addressController.text,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Profile updated successfully!')),
+      );
+    }
   }
 
   @override
@@ -35,17 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _emailController.dispose();
     _addressController.dispose();
     super.dispose();
-  }
-
-  void _updateProfile() {
-    if (_formKey.currentState!.validate()) {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
-      userProvider.login(_nameController.text);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile updated successfully!')),
-      );
-    }
   }
 
   @override
@@ -91,6 +103,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+            SizedBox(
+                height: MediaQuery.of(context).padding.bottom +
+                    80), // 👈 ajoute un espace sécurisé
           ],
         ),
       ),

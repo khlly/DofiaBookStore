@@ -32,28 +32,55 @@ class _MainScreenState extends State<MainScreen>
   // ignore: unused_field
   late Animation<Offset> _drawerOffset;
 
-List<Widget> get _pages {
-  final userProvider = Provider.of<UserProvider>(context, listen: false);
-  final isLoggedIn = userProvider.isLoggedIn;
+  List<Widget> get _pages {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final isLoggedIn = userProvider.isLoggedIn;
 
-  return [
-    HomeScreen(
-      onGoToCart: _onGotoCart,
-      onGoToFavorite: _onGotoFavorite,
-    ),
-    isLoggedIn
-        ? const CartFavScreen()
-        : const GuestPagesFavCart(
-            guest_title_page: 'My Favorite',
-            key_word_page: 'Favorite',
-          ),
-    isLoggedIn
-        ? const CartList()
-        : const GuestPagesFavCart(
-            guest_title_page: 'My Cart',
-            key_word_page: 'Cart',
-          ),
-    const ProfileScreen(),
+    return [
+      HomeScreen(
+        onGoToCart: _onGotoCart,
+        onGoToFavorite: _onGotoFavorite,
+      ),
+      isLoggedIn
+          ? const CartFavScreen()
+          : const GuestPagesFavCart(
+              guest_title_page: 'My Favorite',
+              key_word_page: 'Favorite',
+            ),
+      isLoggedIn
+          ? const CartList()
+          : const GuestPagesFavCart(
+              guest_title_page: 'My Cart',
+              key_word_page: 'Cart',
+            ),
+      isLoggedIn
+          ? const ProfileScreen()
+          : Center(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Please log in to access your profile.',
+                      style: TextStyle(fontSize: 18),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()),
+                        );
+                      },
+                      child: const Text('Log in'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
     ];
   }
 
@@ -73,7 +100,6 @@ List<Widget> get _pages {
       },
     );
   }
-
 
   void _onGotoCart() {
     setState(() {
